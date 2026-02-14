@@ -1,0 +1,66 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Manage Buses</h1>
+    <a href="/register/bus" class="btn btn-primary btn-sm">
+        <i class="bi bi-plus-lg"></i> Add New Bus
+    </a>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0"> <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-3">ID</th>
+                        <th>Plate Number</th>
+                        <th>Driver Name</th>
+                        <th>Phone Number</th>
+                        <th>Photo</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bus in buses %}
+                    <tr>
+                        <td class="ps-3 text-muted">#{{ bus[0] }}</td>
+                        <td><span class="badge bg-secondary">{{ bus[1] }}</span></td>
+                        <td class="fw-bold">{{ bus[2] }}</td>
+                        <td>{{ bus[4] }}</td>
+                        <td>
+                            {% if bus[3] %}
+                                <img src="/{{bus[3]}}" 
+                                     alt="Driver" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                            {% else %}
+                                <i class="bi bi-person-circle fs-4 text-secondary"></i>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-sm">
+                                <a href="/edit/bus/{{ bus[0] }}" class="btn btn-outline-primary">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="/delete/bus/{{ bus[0] }}" class="btn btn-outline-danger" 
+                                   onclick="return confirm('Are you sure you want to delete this bus?')">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                    {% if not buses %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            No buses found in the database.
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

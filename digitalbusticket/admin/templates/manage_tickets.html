@@ -1,0 +1,68 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Issued Tickets</h1>
+    <a href="/generate/ticket" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i> Issue New Ticket
+    </a>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="ps-3">Ticket ID</th>
+                        <th>Bus / Plate No</th>
+                        <th>Driver</th>
+                        <th>Destination</th>
+                        <th>Price</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                    <tr>
+                        <td class="ps-3">
+                            <code class="fw-bold text-primary">{{ ticket[0] }}</code>
+                        </td>
+                        <td>
+                            <span class="badge rounded-pill bg-info text-dark">{{ ticket[2] }}</span>
+                        </td>
+                        <td>{{ ticket[4] }}</td>
+                        <td class="text-truncate" style="max-width: 200px;">
+                            {{ ticket[3] }}
+                        </td>
+                        <td class="fw-bold text-success">
+                            ${{ "{:,.2f}".format(ticket[1]) }}
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <a href="/delete/ticket/{{ ticket[0] }}" 
+                                   class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('Void this ticket?')">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    {% if not tickets %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5">
+                            <div class="text-muted">
+                                <i class="bi bi-ticket-detailed fs-1"></i>
+                                <p class="mt-2">No tickets have been generated yet.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

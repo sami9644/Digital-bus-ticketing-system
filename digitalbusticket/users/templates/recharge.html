@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recharge with Telebirr</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .telebirr-header { background: #0056b3; color: white; border-radius: 0 0 25px 25px; padding: 40px 20px; }
+        .amount-card { margin-top: -30px; border-radius: 20px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .amount-option { border: 2px solid #e9ecef; border-radius: 12px; padding: 10px; cursor: pointer; transition: 0.3s; }
+        .amount-option:hover { border-color: #0056b3; background: #f0f7ff; }
+        .amount-option input:checked + label { color: #0056b3; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="telebirr-header text-center">
+        <a href="/dashboard" class="text-white float-start fs-4"><i class="bi bi-arrow-left"></i></a>
+        <h4 class="fw-bold mb-0">Recharge Wallet</h4>
+        <p class="small opacity-75">Secure payment via Telebirr</p>
+    </div>
+
+    <div class="container px-4">
+        <div class="card amount-card p-4">
+            <form action="/process/recharge" method="POST">
+                <label class="form-label small fw-bold text-muted">SELECT OR ENTER AMOUNT (ETB)</label>
+                
+                <div class="row g-2 mb-4">
+                    <div class="col-4">
+                        <div class="amount-option text-center" onclick="setAmount(50)">50</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="amount-option text-center" onclick="setAmount(100)">100</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="amount-option text-center" onclick="setAmount(500)">500</div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <input type="number" name="amount" id="amountInput" class="form-control form-control-lg border-0 bg-light text-center fw-bold" placeholder="0.00" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-3 rounded-pill fw-bold shadow-sm" style="background: #0056b3;">
+                    Continue with Telebirr
+                </button>
+                
+                <p class="text-center mt-3 text-muted" style="font-size: 11px;">
+                    <i class="bi bi-shield-lock-fill"></i> Your transaction is encrypted and secure.
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function setAmount(val) {
+            document.getElementById('amountInput').value = val;
+        }
+    </script>
+</body>
+</html>
