@@ -1,0 +1,41 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0 py-1">Register New Bus</h5>
+    </div>
+    <div class="card-body p-4">
+        <form method="POST" action="/register/bus" enctype="multipart/form-data">
+           <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="plateno" class="form-label fw-bold">Plate Number</label>
+                    <input type="text" class="form-control" id="plateno" name="plateno" placeholder="e.g. ABC-1234" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="telno" class="form-label fw-bold">Driver's Phone Number</label>
+                    <input type="number" class="form-control" id="telno" name="telno" placeholder="Enter phone number" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="fullname" class="form-label fw-bold">Driver Full Name</label>
+                <input type="text" class="form-control" id="fullname" name="fullname" placeholder="John Doe" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="photo" class="form-label fw-bold">Driver's Passport Size Photo</label>
+                <input type="file" class="form-control" id="photo" name="photo" accept=".jpg,.png" required>
+                <div class="form-text">Only .jpg and .png files are accepted.</div>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i class="bi bi-save me-2"></i> Register Bus
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

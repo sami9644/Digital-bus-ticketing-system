@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Sales - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .card { border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .table thead { background-color: #f1f3f5; }
+        .btn-dashboard { border-radius: 8px; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold text-dark mb-0">Ticket Sales Registry</h2>
+                <a href="/admin/dash" class="btn btn-outline-primary btn-dashboard">
+                    <i class="bi bi-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+
+            <div class="card p-4">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-muted small text-uppercase">#</th>
+                                <th scope="col" class="text-muted small text-uppercase">Customer Name</th>
+                                <th scope="col" class="text-muted small text-uppercase">Phone Number</th>
+                                <th scope="col" class="text-muted small text-uppercase">Paid for (persons)</th>
+                                <th scope="col" class="text-muted small text-uppercase">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for payer in payers %}
+                            <tr>
+                                <td class="fw-bold text-secondary">{{ loop.index }}</td>
+                                <td>
+                                    <span class="d-block fw-semibold">{{ userdata(payer[3])[1] }}</span>
+                                </td>
+                                <td>
+                                    <span class="text-muted">{{ userdata(payer[3])[2] }}</span>
+                                </td>
+                                <td>
+                                    <span class="text-muted">{{ payer[2] }} etb.{{ payer[1] }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-success-soft text-success border border-success px-3 py-2 rounded-pill" style="background-color: #e6fcf5;">
+                                        Confirmed Paid
+                                    </span>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center py-5 text-muted">
+                                    No ticket purchases found yet.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <p class="text-center mt-4 text-muted small">Total Records: {{ payers|length }}</p>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

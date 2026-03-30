@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root { --bs-primary: #0d6efd; }
+        body { background-color: #f4f7f6; padding-bottom: 80px; font-family: 'Inter', sans-serif; }
+        
+        /* Mobile App Feel */
+        .app-card { border: none; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .profile-img { width: 45px; height: 45px; object-fit: cover; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        
+        /* Glassmorphism Navbar */
+        .navbar-custom { background: rgba(255, 255, 255, 0.8) !important; backdrop-filter: blur(10px); }
+        
+        /* Custom Search Bar */
+        .search-input { background-color: #f0f2f5; border: none; border-radius: 12px; padding: 12px 15px; }
+        .search-input:focus { background-color: #e9ecef; box-shadow: none; }
+
+        /* Bottom Navigation */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; border-top: 1px solid #eee; padding: 10px 0; z-index: 1000; }
+        .bottom-nav a { text-align: center; color: #6c757d; text-decoration: none; font-size: 12px; transition: 0.3s; }
+        .bottom-nav a.active { color: var(--bs-primary); }
+        .bottom-nav i { font-size: 20px; display: block; }
+
+        /* Ticket Item */
+        .ticket-item { border-radius: 15px; border: 1px solid #f0f0f0; transition: transform 0.2s; }
+        .ticket-item:active { transform: scale(0.97); }
+        .btn-detail { font-size: 0.75rem; border-radius: 10px; font-weight: 600; }
+        /* Added a pulse animation for the active status dot */
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(40, 167, 69, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+}
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-custom sticky-top mb-3">
+        <div class="container-fluid px-3">
+            <div class="d-flex align-items-center">
+                <img src="/{{userinfo[4]}}" alt="Profile" class="profile-img me-2">
+                <div>
+                    <div class="text-muted" style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Welcome</div>
+                    <div class="fw-bold" style="font-size: 14px;">{{ userinfo[1] }}</div>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="btn btn-light rounded-circle shadow-sm p-1" type="button" data-bs-toggle="dropdown" style="width: 35px; height: 35px;">
+                    <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4 mt-2">
+                    <li><a class="dropdown-item py-2" href="/change/picture"><i class="bi bi-camera me-2"></i> Update Photo</a></li>
+                    <li><a class="dropdown-item py-2" href="/change/password"><i class="bi bi-shield-lock me-2"></i> Security</a></li>
+                    <li><a href="/history" class="dropdown-item py-2"><i class="bi bi-clock-history"></i> Payment history</a></li>
+                    <li><hr class="dropdown-divider" ></li>
+                    <li><a class="dropdown-item py-2 text-danger" href="/logout"><i class="bi bi-box-arrow-right me-2"></i> Log out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container px-4">
+        <div class="card app-card p-3 mb-4">
+            <label class="text-muted mb-2 fw-bold" style="font-size: 11px; text-transform: uppercase;">Find Ticket</label>
+            <form action="/ticket/search" method="get">
+                <div class="input-group">
+                    <input type="text" name="ticketno" class="form-control search-input text-sm" placeholder="Enter bus plate number" required>
+                    <button class="btn btn-primary rounded-3 ms-2 px-3" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        
+
+        <div class="ticket-container">
+            {% block content %}
+            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/qrcode">
+  Click here to pay for ticket
+</a>
+
+            {% endblock %}
+        </div>
+
+            <div class="col-6">
+                <div class="card app-card p-3 bg-white border-0">
+                    <div class="small text-muted">Status</div>
+                    <div class="h5 fw-bold mb-0 text-success d-flex align-items-center">
+                        <span class="bg-success rounded-circle me-2" style="width: 8px; height: 8px;"></span>
+                        Active
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom-nav">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <a href="/dashboard" class="active">
+                        <i class="bi bi-house-door-fill"></i>
+                        Home
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

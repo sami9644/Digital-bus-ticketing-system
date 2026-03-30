@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Explorer</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; }
+        .folder { color: #007bff; font-weight: bold; text-decoration: none; }
+        .file { color: #6c757d; }
+        ul { list-style: none; }
+    </style>
+</head>
+<body>
+    <h1>Browsing: C:/{{ current_path }}</h1>
+    <a href="/">🏠 Back to Root</a>
+    <hr>
+
+    <h3>Folders</h3>
+    <ul>
+        {% for folder in dirs %}
+            <li>
+                📁 <a class="folder" href="{{ url_for('browse', subpath=current_path + '/' + folder if current_path else folder) }}">
+                    {{ folder }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h3>Files</h3>
+<ul>
+    {% for file in files %}
+        <li class="file">
+            📄 {{ file }} 
+            {% set full_file_path = current_path + '/' + file if current_path else file %}
+            <a href="{{ url_for('download_file', filepath=full_file_path) }}" 
+               style="font-size: 0.8em; margin-left: 10px; color: green;">
+               [Download]
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+</body>
+</html>
